@@ -23,7 +23,9 @@ class ProductCreateView(PermissionRequiredMixin, CreateView):
     template_name = 'product/create_view.html'
     form_class = ProductForm
     permission_required = 'webapp.add_product'
-    permission_denied_message = '403 Доступ запрещен'
+
+
+
 
     def get_success_url(self):
         return reverse('webapp:product_view', kwargs={'pk': self.object.pk})
