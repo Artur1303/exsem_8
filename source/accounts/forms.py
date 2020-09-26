@@ -6,7 +6,7 @@ from django.conf import settings
 from django import forms
 from django.contrib.auth import get_user_model
 
-from .models import AuthToken, Profile, TOKEN_TYPE_PASSWORD_RESET
+from .models import Profile, TOKEN_TYPE_PASSWORD_RESET
 
 
 class MyUserCreationForm(UserCreationForm):
@@ -31,9 +31,6 @@ class MyUserCreationForm(UserCreationForm):
     #     user = super().save(commit=commit)
     #     Profile.objects.create(user=user)
     #     return user
-
-    def create_token(self, user):
-        return AuthToken.objects.create(user=user)
 
     def send_email(self, user, token):
         if user.email:
@@ -113,22 +110,6 @@ class PasswordResetEmailForm(forms.Form):
             raise ValidationError('Пользователь с таким email-ом не зарегистрирован')
         return email
 
-    def send_email(self):
-        User = get_user_model()
-        email = self.cleaned_data.get('email')
-        user = User.objects.filter(email=email).first()
-        token = AuthToken.objects.create(user=user, life_days=3, type=TOKEN_TYPE_PASSWORD_RESET)
-
-        subject = 'Вы запросили восстановление пароля для учётной записи на сайте "Мой Блог"'
-        link = settings.BASE_HOST + reverse('accounts:password_reset', kwargs={'token': token.token})
-        message = f'''Ваша ссылка для восстановления пароля: {link}.
-Если вы считаете, что это ошибка, просто игнорируйте это письмо.'''
-        html_message = f'''Ваша ссылка для восстановления пароля: <a href="{link}">{link}</a>.
-Если вы считаете, что это ошибка, просто игнорируйте это письмо.'''
-        try:
-            user.email_user(subject, message, html_message=html_message)
-        except Exception as e:
-            print(e)
 
 
 class PasswordResetForm(SetPasswordForm):

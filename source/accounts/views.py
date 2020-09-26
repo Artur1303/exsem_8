@@ -14,8 +14,8 @@ from django.conf import settings
 
 from accounts.forms import MyUserCreationForm, UserChangeForm, ProfileChangeForm, \
     PasswordChangeForm, PasswordResetEmailForm, PasswordResetForm
-from webapp.models import Cart
-from .models import AuthToken, Profile
+
+from .models import Profile
 
 
 
@@ -44,11 +44,6 @@ class RegisterView(CreateView):
 
 class RegisterActivateView(View):
     def get(self, request, *args, **kwargs):
-        token = AuthToken.get_token(self.kwargs.get('token'))
-        if token:
-            if token.is_alive():
-                self.activate_user(token)
-            token.delete()
         return redirect('webapp:index')
 
     def activate_user(self, token):
@@ -170,24 +165,7 @@ class UserPasswordResetView(UpdateView):
     template_name = 'password_reset.html'
     success_url = reverse_lazy('accounts:login')
 
-    def get_object(self, queryset=None):
-        token = self.get_token()
-        if token and token.is_alive():
-            return token.user
-        raise Http404('Ссылка не существует или её срок действия истёк')
-
-    def form_valid(self, form):
-        token = self.get_token()
-        token.delete()
-        return super().form_valid(form)
-
-    def get_token(self):
-        return AuthToken.get_token(self.kwargs.get('token'))
 
 
-class CartClearLogoutView(LogoutView):
-    @method_decorator(never_cache)
-    def dispatch(self, request, *args, **kwargs):
-        cart_ids = request.session.get('cart_ids', [])
-        Cart.objects.filter(pk__in=cart_ids).delete()
-        return super().dispatch(request, *args, **kwargs)
+
+
