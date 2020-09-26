@@ -39,8 +39,8 @@
                 <div class="pre">Рэйтинг: {{ review.rating }}</div>
                 <p>Средний рейтинг: {{ product.avg }}</p>
 
-               <p><a href="{% url 'accounts:detail' request.user.pk %}">
-                        Пользователь: {{ request.user.get_full_name}}</a></p>
+               <p><a href="{% url 'accounts:detail' review.author.pk%}">
+                        Пользователь: {{ review.author.get_full_name }}</a></p>
 
                 {% if perms.webapp.change_review %}
                     <a href="{% url 'webapp:review_update' review.pk %}">Update</a>

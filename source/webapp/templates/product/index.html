@@ -10,9 +10,13 @@
         <div class="box">
         <p>Средний рейтинг: {{ product.avg }}</p>
             <h3><a href="{% url 'webapp:product_view' product.pk %}">{{ product.name }}</a></h3>
+            {% if perms.webapp.change_review %}
              <li><a href="{% url 'webapp:product_update' product.pk %}">Update</a></li>
+            {% endif %}
             <br>
+        {% if perms.webapp.delete_review %}
             <li><a href="{% url 'webapp:product_delete' product.pk %}">Delete</a></li>
+        {% endif %}
             <p>Продукты {{product.name}}</p>
         </div>
     {% endfor %}
