@@ -1,1 +1,1 @@
-# ФАИЛ ДЛЯ ИМПОРТПА
+from .product_view import *
