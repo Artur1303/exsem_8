@@ -51,3 +51,12 @@ class ProductUpdateView(PermissionRequiredMixin, UpdateView):
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
+
+
+class ProductDeleteView(PermissionRequiredMixin, DeleteView):
+    model = Product
+    pk_kwargs_url = 'pk'
+    template_name = 'product/delete_view.html'
+    context_object_name = 'product'
+    success_url = reverse_lazy('webapp:index')
+    permission_required = 'webapp.delete_product'
