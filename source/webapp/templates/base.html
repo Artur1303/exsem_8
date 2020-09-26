@@ -19,9 +19,10 @@
         <div class="container">
             <ul class="menu">
                 <li><a href="{% url "webapp:index" %}">Home</a></li>
-                <li><a href="#}"></a></li>
+
                 {% if request.user.is_authenticated %}
                     <li><a href="{% url 'webapp:product_create' %}">Add Product</a></li>
+
                     {% endif %}
                     {% block menu %}{% endblock %}
 {#                    <li><a href="{% url 'accounts:detail' request.user.pk %}">#}

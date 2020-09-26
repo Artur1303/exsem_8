@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 {% block title %}{{ product.name }}{% endblock %}
 
 {% block menu %}
@@ -18,12 +19,15 @@
         {% if product.picture %}
         <img class="avatar" src="{{ product.picture.url }}"
              width="200" height="200" alt="user picture">
+            {% else %}
+            <img class="avatar" src="{% static 'image/resize-800-600-no.jpg' %}"
+             width="200" height="200" alt="user picture">
     {% endif %}
     <h1>{{ product.name }}</h1>
     <p><b>Description: </b>{{ product.descriptions }}</p>
     <p><b>Status: </b>{{ product.category }}</p>
 
-{#    <a href="{% url 'webapp:review_add' product.pk %}"><i class="fas fa-plus-square"></i></a>#}
+    <a href="{% url "webapp:review_create" product.pk %}">Добавить отзыв</a>
 
     <h2>Reviews</h2>
     <div class="task-list">
