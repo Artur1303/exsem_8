@@ -2,9 +2,9 @@
 {% block title %}{{ product.name }}{% endblock %}
 
 {% block menu %}
-{#    {% if perms.webapp.change_product %}#}
-{#        <li><a href="{% url 'webapp:product_update' product.pk %}">Edit</a></li>#}
-{#    {% endif %}#}
+    {% if perms.webapp.change_product %}
+        <li><a href="{% url 'webapp:product_update' product.pk%}">Update</a></li>
+    {% endif %}
 {#    {% if perms.webapp.delete_product %}#}
 {#        <li><a href="{% url 'webapp:product_delete' product.pk %}">Delete</a></li>#}
 {#    {% endif %}#}

@@ -2,9 +2,14 @@
 
 {% block content %}
     <h1>Товары:</h1>
+    {% block menu %}
+
+{% endblock %}
+
     {% for product in products %}
         <div class="box">
             <h3><a href="{% url 'webapp:product_view' product.pk %}">{{ product.name }}</a></h3>
+             <li><a href="{% url 'webapp:product_update' product.pk %}">Update</a></li>
             <p>Продукты {{product.name}}</p>
         </div>
     {% endfor %}
