@@ -27,3 +27,22 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse('webapp:product_view', kwargs={'pk': self.object.product.pk})
+
+
+class ReviewUpdateView(PermissionRequiredMixin, UpdateView):
+    model = Review
+    template_name = 'review/update_view.html'
+    form_class = ReviewForm
+    context_object_name = 'review'
+    permission_required = 'webapp.change_review'
+
+    def form_valid(self, form):
+        product = get_object_or_404(Product, pk=self.kwargs.get('pk'))
+        self.object = form.save(commit=False)
+        self.object.created_by = self.request.user
+        self.object.product = product
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        return reverse('webapp:product_view', kwargs={'pk': self.object.product.pk})
