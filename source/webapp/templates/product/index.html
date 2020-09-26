@@ -4,7 +4,7 @@
     <h1>Товары:</h1>
     {% for product in products %}
         <div class="box">
-            <h3><a href="#">{{ product.name }}</a></h3>
+            <h3><a href="{% url 'webapp:product_view' product.pk %}">{{ product.name }}</a></h3>
             <p>Продукты {{product.name}}</p>
         </div>
     {% endfor %}

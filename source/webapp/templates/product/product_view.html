@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block menu %}
+{#    {% if perms.webapp.change_product %}#}
+{#        <li><a href="{% url 'webapp:product_update' product.pk %}">Edit</a></li>#}
+{#    {% endif %}#}
+{#    {% if perms.webapp.delete_product %}#}
+{#        <li><a href="{% url 'webapp:product_delete' product.pk %}">Delete</a></li>#}
+{#    {% endif %}#}
+{#    {% if perms.webapp.add_product%}#}
+{#        <li><a href="{% url 'webapp:product_add' %}">Create</a></li>#}
+{#    {% endif %}#}
+{% endblock %}
+
+{% block content %}
+
+        {% if product.picture %}
+        <img class="avatar" src="{{ product.picture.url }}"
+             width="200" height="200" alt="user picture">
+    {% endif %}
+    <h1>{{ product.name }}</h1>
+    <p><b>Description: </b>{{ product.descriptions }}</p>
+    <p><b>Status: </b>{{ product.category }}</p>
+
+{#    <a href="{% url 'webapp:review_add' product.pk %}"><i class="fas fa-plus-square"></i></a>#}
+
+    <h2>Reviews</h2>
+    <div class="task-list">
+        {% for review in product.products.all  %}
+            <hr>
+            <div class="task">
+{#                <p>Author: <a href="{% url 'accounts:user_detail' review.author.pk %}"><b class="card-text card-link">#}
+{#                    {{ review.author }}#}
+{#                </b></a></p>#}
+                <p>Отзыв: <b>{{ review.review }}</b></p>
+                <p>Email: <b>{{ review.author.email }}</b></p>
+                <div class="pre">Рэйтинг: {{ review.rating }}</div>
+
+               <p><a href="{% url 'accounts:detail' request.user.pk %}">
+                        Пользователь: {{ request.user.get_full_name}}</a></p>
+
+{#                {% if perms.webapp.change_review %}#}
+{#                    <a href="{% url 'webapp:review_update' review.pk %}"><i class="fas fa-edit"></i></a>#}
+{#                {% endif %}#}
+{#                {% if perms.webapp.delete_review %}#}
+{#                    <a href="{% url 'webapp:review_delete' review.pk %}"><i class="fas fa-trash"></i></a>#}
+{#                {% endif %}#}
+              </div>
+            </div>
+    {% endfor %}
+
+{% endblock %}
