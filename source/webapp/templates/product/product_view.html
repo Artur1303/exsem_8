@@ -6,9 +6,9 @@
     {% if perms.webapp.change_product %}
         <li><a href="{% url 'webapp:product_update' product.pk%}">Update</a></li>
     {% endif %}
-{#    {% if perms.webapp.delete_product %}#}
-{#        <li><a href="{% url 'webapp:product_delete' product.pk %}">Delete</a></li>#}
-{#    {% endif %}#}
+    {% if perms.webapp.delete_product %}
+        <li><a href="{% url 'webapp:product_delete' product.pk %}">Delete</a></li>
+    {% endif %}
 {#    {% if perms.webapp.add_product%}#}
 {#        <li><a href="{% url 'webapp:product_add' %}">Create</a></li>#}
 {#    {% endif %}#}
@@ -45,11 +45,11 @@
                         Пользователь: {{ request.user.get_full_name}}</a></p>
 
                 {% if perms.webapp.change_review %}
-                    <a href="{% url 'webapp:review_update' review.pk %}">Update Review</a>
+                    <a href="{% url 'webapp:review_update' review.pk %}">Update</a>
                 {% endif %}
-{#                {% if perms.webapp.delete_review %}#}
-{#                    <a href="{% url 'webapp:review_delete' review.pk %}"><i class="fas fa-trash"></i></a>#}
-{#                {% endif %}#}
+                {% if perms.webapp.delete_review %}
+                    <a href="{% url 'webapp:review_delete' review.pk %}">Delete</a>
+                {% endif %}
               </div>
             </div>
     {% endfor %}
