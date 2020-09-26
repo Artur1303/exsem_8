@@ -19,6 +19,30 @@
     <p>Фамилия: {{ user_obj.last_name }}</p>
     <p>Дата рождения: {{ user_obj.profile.birth_date|date:'d.m.Y' }}</p>
     <p>Почта: {{ user_obj.email }}</p>
+        <h2>Reviews</h2>
+    <div class="task-list">
+    {% for review in user_obj.user_order.all %}
+        <hr>
+            <div class="task">
+                <p>Отзыв: <b>{{ review.review }}</b></p>
+                <p>Email: <b>{{ review.author.email }}</b></p>
+                <div class="pre">Рэйтинг: {{ review.rating }}</div>
+                <p>Средний рейтинг: {{ product.avg }}</p>
+
+               <p><a href="{% url 'accounts:detail' request.user.pk %}">
+                        Пользователь: {{ request.user.get_full_name}}</a></p>
+
+                {% if perms.webapp.change_review %}
+                    <a href="{% url 'webapp:review_update' review.pk %}">Update</a>
+                {% endif %}
+                {% if perms.webapp.delete_review %}
+                    <a href="{% url 'webapp:review_delete' review.pk %}">Delete</a>
+                {% endif %}
+              </div>
+
+    {% endfor %}
+    </div>
+
 
 {#    <h2 class="text-center clear">Статьи автора:</h2>#}
 {#    {% include 'partial/article_list.html' %}#}

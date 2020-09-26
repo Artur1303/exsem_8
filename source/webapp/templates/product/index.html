@@ -8,6 +8,7 @@
 
     {% for product in products %}
         <div class="box">
+        <p>Средний рейтинг: {{ product.avg }}</p>
             <h3><a href="{% url 'webapp:product_view' product.pk %}">{{ product.name }}</a></h3>
              <li><a href="{% url 'webapp:product_update' product.pk %}">Update</a></li>
             <br>

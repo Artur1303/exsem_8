@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.core.validators import MinLengthValidator
 from django.db import models
 from django.conf import settings
-from django.utils import timezone
+from django.db.models import Avg
 
 
 CATEGORY_CHOICES = (
@@ -27,6 +27,13 @@ class Product(models.Model):
                                 choices=CATEGORY_CHOICES,default=None)
     descriptions = models.TextField(max_length=3000, null=True, blank=True, verbose_name='Описание')
     picture = models.ImageField(null=True, blank=True, upload_to='user_pics', verbose_name='Картинка')
+
+    def avg(self):
+        rating = self.products.all().aggregate(Avg('rating'))
+        return rating['rating__avg']
+
+
+
 
     def __str__(self):
         return self.name

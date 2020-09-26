@@ -34,12 +34,10 @@
         {% for review in product.products.all  %}
             <hr>
             <div class="task">
-{#                <p>Author: <a href="{% url 'accounts:user_detail' review.author.pk %}"><b class="card-text card-link">#}
-{#                    {{ review.author }}#}
-{#                </b></a></p>#}
                 <p>Отзыв: <b>{{ review.review }}</b></p>
                 <p>Email: <b>{{ review.author.email }}</b></p>
                 <div class="pre">Рэйтинг: {{ review.rating }}</div>
+                <p>Средний рейтинг: {{ product.avg }}</p>
 
                <p><a href="{% url 'accounts:detail' request.user.pk %}">
                         Пользователь: {{ request.user.get_full_name}}</a></p>
@@ -51,7 +49,8 @@
                     <a href="{% url 'webapp:review_delete' review.pk %}">Delete</a>
                 {% endif %}
               </div>
-            </div>
+
     {% endfor %}
+    </div>
 
 {% endblock %}
